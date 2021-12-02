@@ -1,15 +1,10 @@
 //
-// Created by pedro on 29/11/2021.
+// Created by pedro on 01/12/2021.
 //
 
 #ifndef AED_PROJ1_MENU_H
 #define AED_PROJ1_MENU_H
 
-
-#include "Platform.h"
-#include "Admin.h"
-#include "Streamer.h"
-#include "Viewer.h"
 #include <iostream>
 #include <map>
 #include <functional>
@@ -37,13 +32,13 @@ namespace screen{
     void showScreen();
 }
 
+
 class Menu{
 protected:
-    Platform &platform;
-
+    std::vector<Passenger *> clients;
     Menu * invalidOption();
 public:
-    explicit Menu(Platform &platform);
+    explicit Menu();
     virtual ~Menu() = default;
     /**
      * Show information associated with the menu
@@ -60,121 +55,38 @@ public:
 
 class MainMenu : public Menu {
 public:
-    explicit MainMenu(Platform &platform);
+    explicit MainMenu();
     void show() override;
     Menu * getNextMenu() override;
 };
 
-class RegisterUserMenu : public Menu{
-public:
-    explicit RegisterUserMenu(Platform &platform);
-    void show() override;
-    Menu * getNextMenu() override;
-};
-
-class LoginUserMenu : public Menu{
+class LoginPassengerMenu : public Menu{
     bool logged_in = false;
 public:
-    explicit LoginUserMenu(Platform &platform);
+    explicit LoginPassengerMenu();
     void show() override;
     Menu * getNextMenu() override;
 };
 
-class ViewerMenu : public Menu{
-    Viewer * viewer;
+class BookingMenu : public Menu{
+    Passenger * passenger;
 public:
-    ViewerMenu(Platform &platform, Viewer * viewer);
+    BookingMenu(Passenger * passenger);
     void show() override;
     Menu * getNextMenu() override;
 };
 
-class StreamerMenu : public Menu{
-    Streamer * streamer;
+class PlaneMenu : public Menu{
+    std::vector<Plane *> availablePlanes;
 public:
-    StreamerMenu(Platform &platform, Streamer * streamer);
-    void show() override;
-    Menu * getNextMenu() override;
-};
-
-class AdministratorMenu : public Menu{
-    Admin admin;
-public:
-    AdministratorMenu(Platform &platform);
-    void show() override;
-    Menu * getNextMenu() override;
-};
-
-class FilterStreamsMenu : public Menu{
-    Admin & admin;
-public:
-    FilterStreamsMenu(Platform &platform, Admin & admin);
-    void show() override;
-    Menu * getNextMenu() override;
-};
-
-class FilterStreamersMenu : public Menu{
-public:
-    FilterStreamersMenu(Platform &platform);
-    void show() override;
-    Menu * getNextMenu() override;
-};
-
-class InformationMenu : public Menu{
-public:
-    InformationMenu(Platform &platform);
-    void show() override;
-    Menu * getNextMenu() override;
-};
-
-class SortMenu : public Menu {
-    bool stage2 = false;
-public:
-    SortMenu(Platform &platform);
-    void show() override;
-    Menu * getNextMenu() override;
-};
-
-class CreateStreamMenu : public Menu{
-    Streamer * streamer;
-public:
-    CreateStreamMenu(Platform &platform, Streamer * streamer);
-    void show() override;
-    Menu * getNextMenu() override;
-};
-
-class JoinStreamMenu : public Menu{
-    Viewer * viewer;
-public:
-    JoinStreamMenu(Platform &platform, Viewer * viewer);
-    void show() override;
-    Menu * getNextMenu() override;
-};
-
-class SubmitCommentMenu : public Menu{
-    Viewer * viewer;
-public:
-    SubmitCommentMenu(Platform &platform, Viewer * viewer);
+    PlaneMenu();
     void show() override;
     Menu * getNextMenu() override;
 };
 
 
-class ViewerStoreMenu : public Menu{
-    Viewer * viewer;
-    Store * store;
-    Order order;
-public:
-    ViewerStoreMenu(Platform &platform, Viewer * viewer, Store * store);
-    void show() override;
-    Menu * getNextMenu() override;
-};
 
-class StreamerStoreMenu : public Menu{
-    Store * store;
-public:
-    StreamerStoreMenu(Platform &platform, Store * store);
-    void show() override;
-    Menu * getNextMenu() override;
-};
+
+
 
 #endif //AED_PROJ1_MENU_H
