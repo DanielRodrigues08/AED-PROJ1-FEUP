@@ -7,7 +7,7 @@ add_subdirectory(lib/googletest-master)
 include_directories(lib/googletest-master/googletest/include)
 include_directories(lib/googletest-master/googlemock/include)
 
-add_executable(AED_PROJ1 main.cpp tests/tests.cpp src/Luggage.h src/Airplane.h src/Flight.h src/Menu.h src/passenger.h src/Service.h src/ticket.h)
+add_executable(AED_PROJ1 main.cpp tests/tests.cpp src/Luggage.h)
 
 target_link_libraries(AED_PROJ1 gtest gtest_main)
 
