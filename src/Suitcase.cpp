@@ -1,4 +1,6 @@
 #include "Suitcase.h"
+#include "Passenger.h"
+#include "Flight.h"
 
 Suitcase::Suitcase() {
     weight = 0;
@@ -72,3 +74,5 @@ float HoldSuitcase::overweight() const{
     else
         return 0;
 }
+
+CheckedSuitcase::CheckedSuitcase(Passenger passenger, Flight flight, HoldSuitcase suitcase): suitcase(suitcase), passenger(passenger), flight(flight) {}

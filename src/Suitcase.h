@@ -1,6 +1,12 @@
 #ifndef AED_PROJ1_SUITCASE_H
 #define AED_PROJ1_SUITCASE_H
 
+#include "Passenger.h"
+#include "Flight.h"
+#include <list>
+
+using namespace std;
+
 class Suitcase{
 private:
     float weight, width, height, length;
@@ -36,4 +42,13 @@ public:
     float overweight() const;
 };
 
+
+class CheckedSuitcase{
+    HoldSuitcase suitcase;
+    Passenger passenger;
+    Flight flight;
+public:
+    CheckedSuitcase(Passenger passenger, Flight flight, HoldSuitcase suitcase);
+
+};
 #endif //AED_PROJ1_SUITCASE_H
