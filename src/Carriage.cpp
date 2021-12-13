@@ -5,40 +5,58 @@
 #include <queue>
 #include "Carriage.h"
 #include "Suitcase.h"
-Carriage::Carriage(unsigned int maxNumSuitcases):maxNumSuitcases(maxNumSuitcases) {}
+
+Carriage::Carriage(unsigned maxNumSuitcases, unsigned maxNumStacks):maxNumSuitcases(maxNumSuitcases), maxNumStacks(maxNumStacks) {}
 
 bool Carriage::addSuitcase(const CheckedSuitcase &l1) {
     if(getCapacity() == 0)
         return false;
-    suitcases.push(l1);
-}
-
-CheckedSuitcase Carriage::removeSuitcase() {
-    CheckedSuitcase temp = suitcases.top() ;
-    suitcases.pop();
-    return temp;
+    for(auto idx: suitcases){
+        if(maxNumSuitcases > idx.size())
+            idx.push(l1);
+        return true;
+    }
+    stack<CheckedSuitcase> temp;
+    temp.push(l1);
+    return true;
 }
 
 unsigned Carriage::getCapacity() {
-    return maxNumSuitcases - CheckedSuitcase.size();
+    unsigned counter = 0;
+    for(auto idx: suitcases)
+        counter += idx.size();
+    return maxNumStacks*maxNumSuitcases - counter;
 }
 
 bool Carriage::isEmpty() {
-    return suitcases.empty();
+    for(auto idx: suitcases)
+        if(idx.size() != 0)
+            return false;
+    return true;
 }
 
-list<CheckedSuitcase> Carriage::unloadStack(){
+list<CheckedSuitcase> Carriage::unloadCarriage(){
     list<CheckedSuitcase> result;
-    while(!isEmpty()){
-        result.push_back(suitcases.top());
-        suitcases.pop();
+    for(auto it = suitcases.begin(); it != suitcases.end(); it++){
+        while (!it->empty()){
+            result.push_back(it->top());
+            it->pop();
+        }
+        it = suitcases.erase(it);
+        it--;
     }
     return result;
 }
 
-void Carriage::loadStack(queue<CheckedSuitcase> &luggage) {
+bool Carriage::loadSuitcases(queue<CheckedSuitcase> &luggage) {
+    bool check = true;
     while (!luggage.empty()){
-        suitcases.push(luggage.front());
-        luggage.pop();
+        if(addSuitcase(luggage.front()))
+            luggage.pop();
+        else {
+            check = false;
+            break;
+        }
     }
+    return check;
 }

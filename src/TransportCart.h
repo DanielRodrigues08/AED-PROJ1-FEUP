@@ -1,0 +1,8 @@
+#ifndef AED_PROJ1_TRANSPORTCART_H
+#define AED_PROJ1_TRANSPORTCART_H
+
+class TransportCart{
+
+};
+
+#endif //AED_PROJ1_TRANSPORTCART_H

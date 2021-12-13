@@ -8,16 +8,17 @@
 
 using namespace std;
 class Carriage {
-    stack<CheckedSuitcase> suitcases;
+    list<stack<CheckedSuitcase>> suitcases;
     unsigned maxNumSuitcases;
+    unsigned maxNumStacks;
 public:
-    Carriage(unsigned maxNumSuitcases);
+    Carriage(unsigned maxNumSuitcases, unsigned maxNumStacks);
     bool addSuitcase(const CheckedSuitcase& l1);
     CheckedSuitcase removeSuitcase();
     unsigned getCapacity();
     bool isEmpty();
-    list<CheckedSuitcase> unloadStack();
-    void  loadStack(queue<CheckedSuitcase> &luggage);
+    list<CheckedSuitcase> unloadCarriage();
+    bool  loadSuitcases(queue<CheckedSuitcase> &luggage);
 };
 
 
