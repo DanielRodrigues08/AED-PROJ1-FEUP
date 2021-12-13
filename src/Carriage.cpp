@@ -48,9 +48,9 @@ list<CheckedSuitcase> Carriage::unloadCarriage(){
     return result;
 }
 
-void Carriage::loadSuitcases(queue<CheckedSuitcase> &luggage) {
+void Carriage::loadSuitcases(stack<CheckedSuitcase> &luggage) {
     while (!luggage.empty()){
-        if(addSuitcase(luggage.front()))
+        if(addSuitcase(luggage.top()))
             luggage.pop();
         else {
             break;

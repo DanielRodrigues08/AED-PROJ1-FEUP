@@ -49,6 +49,8 @@ class CheckedSuitcase{
     Flight flight;
 public:
     CheckedSuitcase(Passenger passenger, Flight flight, HoldSuitcase suitcase);
-
+    Flight getFlight() const;
+    Passenger getPassenger() const;
+    HoldSuitcase getSuitcase();
 };
 #endif //AED_PROJ1_SUITCASE_H

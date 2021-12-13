@@ -16,8 +16,9 @@ class TransportCar{
 public:
     TransportCar(unsigned numCarriages, unsigned maxNumSuitcases, unsigned maxNumStacks);
     void setFlight(Flight flight);
-    bool loadTransportCart(queue<CheckedSuitcase>& luggage);
+    bool loadTransportCart(stack<CheckedSuitcase>& luggage);
     list<CheckedSuitcase> unloadTransportCart();
+    bool isAvailable() const;
 };
 
 #endif //AED_PROJ1_TRANSPORTCART_H

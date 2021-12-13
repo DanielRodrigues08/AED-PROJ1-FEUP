@@ -17,7 +17,7 @@ void TransportCar::setFlight(int flight) {
     this->flight = flight;
 }
 
-bool TransportCar::loadTransportCart(queue<CheckedSuitcase> &luggage) {
+bool TransportCar::loadTransportCart(stack<CheckedSuitcase> &luggage) {
     available = false;
     for(auto idx: carriages){
         idx.loadSuitcases(luggage);
@@ -33,4 +33,8 @@ list<CheckedSuitcase> TransportCar::unloadTransportCart() {
     for(auto idx: carriages)
         result.merge(idx.unloadCarriage());
     return result;
+}
+
+bool TransportCar::isAvailable() const {
+    return available;
 }
