@@ -18,7 +18,7 @@ public:
     unsigned getCapacity();
     bool isEmpty();
     list<CheckedSuitcase> unloadCarriage();
-    bool  loadSuitcases(queue<CheckedSuitcase> &luggage);
+    void  loadSuitcases(queue<CheckedSuitcase> &luggage);
 };
 
 

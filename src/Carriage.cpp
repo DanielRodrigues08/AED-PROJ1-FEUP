@@ -48,15 +48,12 @@ list<CheckedSuitcase> Carriage::unloadCarriage(){
     return result;
 }
 
-bool Carriage::loadSuitcases(queue<CheckedSuitcase> &luggage) {
-    bool check = true;
+void Carriage::loadSuitcases(queue<CheckedSuitcase> &luggage) {
     while (!luggage.empty()){
         if(addSuitcase(luggage.front()))
             luggage.pop();
         else {
-            check = false;
             break;
         }
     }
-    return check;
 }
