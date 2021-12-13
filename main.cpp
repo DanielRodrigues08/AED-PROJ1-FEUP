@@ -1,14 +1,15 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "Menu.h"
+#include "src/Menu.h"
+#include "src/Menu.cpp"
 #include <stack>
 #include <iomanip>
 
-int main(int argc, char* argv[]) {
+int main() {
     std::cout << std::left;
-    Platform platform;
+
     std::stack<Menu *> menus;
-    menus.push(new MainMenu(platform));
+    menus.push(new MainMenu());
 
     while(!menus.empty()){
         menus.top()->show();

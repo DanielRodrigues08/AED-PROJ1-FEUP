@@ -5,12 +5,16 @@
 
 #ifndef AED_PROJ1_AIRPLANE_H
 #define AED_PROJ1_AIRPLANE_H
+#include "Flight.h"
+#include "Service.h"
+#include <list>
 
 using namespace std;
 
 class Airplane {
     const string licensePlate, type;
     int capacity;
+    int seatsReserved;
     list<Flight> flights;
     queue<Service> scheduledServices;
 
@@ -18,9 +22,9 @@ public:
 
     Airplane(string licensePlate,string type,int capacity);
     //flight related methods
+    int availableSeats();
     void assignFlight(Flight &flight);
     void delayFlight(Flight &flight);
-    void cancelFlight(Flight &flight);
     //service related methods
     void scheduleService(Service &service);
 };

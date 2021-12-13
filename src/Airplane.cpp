@@ -29,6 +29,6 @@ void Airplane::scheduleService(Service &service){
 }
 
 
-
-
-
+int Airplane::availableSeats() {
+    return capacity - seatsReserved;
+}

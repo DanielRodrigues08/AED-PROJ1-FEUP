@@ -1,12 +1,13 @@
 //
 // Created by pedro on 02/12/2021.
-//
-#include "Input.h"
+
+
 #include <iostream>
 #include <sstream>
 #include <algorithm>
-#include <chrono>
-#include "Date.h"
+#include "Input.h"
+
+
 
 namespace input {
     std::string getRaw() {
@@ -80,7 +81,11 @@ namespace input {
     }
 
     bool validateBirthDate(const std::string &date) {
-
+        stringstream ss;
+        ss << date;
+        int day = stoi(date.substr(0,2));
+        int month = stoi(date.substr(3,2));
+        int year = stoi(date.substr(6,4));
 
         if (day < 1 || day > 31) {
             return false;

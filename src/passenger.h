@@ -8,15 +8,19 @@
 using namespace std;
 
 class Passenger {
-    string name;
+    string name,birthdate,id;
+
+
     int numFriends;
     vector<string> friendsName;
 
 public:
-    Passenger(string name);
+    Passenger(string id, string birthdate, string name);
     bool canBuyTicket();
     void buyTicket();
     bool wantLuggage();
+    string getID();
+    void cancelFlight();
 };
 
 

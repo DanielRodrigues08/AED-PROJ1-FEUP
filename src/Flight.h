@@ -4,14 +4,14 @@
 
 #ifndef AED_PROJ1_FLIGHT_H
 #define AED_PROJ1_FLIGHT_H
-
+using namespace std;
 
 class Flight {
-    static int number;
+    int number;
     string departureDate, duration, origin, destination;
 
 public:
-    //getters
+    Flight(int number,string origin,string destination,string departureDate,string duration);
     int getNumber();
     string getDepartureDate();
     string getDuration();
