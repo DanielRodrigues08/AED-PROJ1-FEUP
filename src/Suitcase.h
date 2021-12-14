@@ -13,6 +13,7 @@ private:
 public:
     Suitcase();
     Suitcase(float weight, float width, float height, float length);
+    ~Suitcase();
     void setWeight (float weight);
     float getWeight() const;
     float getWidth() const;
