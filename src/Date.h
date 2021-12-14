@@ -16,6 +16,7 @@ private:
 public:
     inline unsigned GetMonthDay(int year, int month) const;
     Date(unsigned day, unsigned month, unsigned year);
+    Date();
     unsigned getDay() const;
     unsigned getMonth() const;
     unsigned getYear() const;

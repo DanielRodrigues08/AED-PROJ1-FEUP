@@ -15,6 +15,12 @@ Time::Time(unsigned int hours, unsigned int minutes, unsigned int seconds) {
     }
 }
 
+Time::Time() {
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+}
+
 ostream& operator<<(ostream& out, const Time& t){
     out << setw(2) << setfill('0') << t.getHours() << ":" << setw(2) << setfill('0') << t.getMinutes() << ":" << setw(2) << setfill('0') << t.getSeconds();
     return out;

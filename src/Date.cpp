@@ -24,6 +24,12 @@ Date::Date(unsigned year,unsigned month,unsigned day)
         throw ErrorInvalidDate();
 }
 
+Date::Date(){
+    year = 0;
+    month = 0;
+    day = 0;
+}
+
 unsigned Date::getDay() const {
     return day;
 }

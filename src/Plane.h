@@ -11,7 +11,7 @@ class Plane{
     unsigned numSeatsEconomic;
     string plate;
     string model;
-    list<Flight>;
+    list<Flight> ;
 };
 
 #endif //AED_PROJ1_PLANE_H

@@ -11,6 +11,7 @@ private:
     unsigned hours, minutes, seconds;
 public:
     Time(unsigned hours,unsigned minutes,unsigned seconds);
+    Time();
     bool operator<(const Time& t1);
     bool operator==(const Time& t1);
     unsigned getHours() const;
