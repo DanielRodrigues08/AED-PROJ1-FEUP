@@ -18,3 +18,9 @@ bool Station::removeTransport(Transport t1) {
     return false;
 }
 
+Transport& Station::getTransport(string destination, Type type) {
+    auto it = find(transports.begin(),transports.end(),Transport(destination,type));
+    if(it != transports.end())
+        return (*it);
+    throw ErrorInexistentTransport();
+}

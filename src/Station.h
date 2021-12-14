@@ -11,7 +11,12 @@ public:
     Station(float distance);
     void addTransport(Transport t1);
     bool removeTransport(Transport t1);
+    Transport& getTransport(string destination, Type type);
+};
 
+class ErrorInexistentTransport: public exception{
+public:
+    ErrorInexistentTransport(){};
 };
 
 #endif //AED_PROJ1_STATION_H

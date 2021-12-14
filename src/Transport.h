@@ -19,8 +19,9 @@ public:
     void addTime(stack<Time>& t1);
     bool removeTime(const Time& t1);
     string getDestination() const;
+    Type getType() const;
     void changeDestination( string d1);
-
+    bool operator==(const Transport& t1);
 };
 
 #endif //AED_PROJ1_TRANSPORT_H

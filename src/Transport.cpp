@@ -25,3 +25,11 @@ string Transport::getDestination() const {
 void Transport::changeDestination(string d1) {
     destination = d1;
 }
+
+Type Transport::getType() const {
+    return type;
+}
+
+bool Transport::operator==(const Transport& t1){
+    return type == t1.getType() && destination == t1.getDestination();
+}
