@@ -7,7 +7,6 @@
 using namespace std;
 
 class Time{
-friend istream& operator>>(istream& in,  Time& t);
 private:
     unsigned hours, minutes, seconds;
 public:

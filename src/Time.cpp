@@ -20,11 +20,6 @@ ostream& operator<<(ostream& out, const Time& t){
     return out;
 }
 
-istream& operator>>(istream& in,  Time& t){
-    in >> t.hours >> t.minutes >> t.seconds;
-    return in;
-}
-
 unsigned Time::getHours() const {
     return hours;
 }
