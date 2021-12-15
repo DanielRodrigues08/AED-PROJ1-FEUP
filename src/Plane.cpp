@@ -13,6 +13,14 @@ Plane::Plane(unsigned int numSeatsFirst, unsigned int numSeatsExecutive, unsigne
     this->model = model;
 }
 
+Plane::Plane() {
+    this->numSeatsFirst = 0;
+    this->numSeatsExecutive = 0;
+    this->numSeatsEconomic = 0;
+    this->plate = "";
+    this->model = "";
+}
+
 unsigned Plane::getNumSeats() const {
     return numSeatsEconomic  + numSeatsExecutive + numSeatsFirst;
 }

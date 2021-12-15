@@ -17,6 +17,7 @@ class Plane{
     list<Flight*> flightPlan;
 public:
     Plane(unsigned numSeatsFirst, unsigned numSeatsExecutive, unsigned numSeatsEconomic, string plate, string model);
+    Plane();
     unsigned getNumSeats() const;
     unsigned getNumSeatsFirst() const;
     unsigned getNumSeatsExecutive() const;
