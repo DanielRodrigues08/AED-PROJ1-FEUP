@@ -45,3 +45,4 @@ void Flight::changeDepartureTime(Time t1) {
 Time Flight::getDuration() const {
     return duration;
 }
+

@@ -4,11 +4,14 @@
 #include <exception>
 #include <iostream>
 #include <iomanip>
+#include "Date.h"
+
 using namespace std;
 
 class Time{
 private:
     unsigned hours, minutes, seconds;
+    friend void sum( Time& t1, const Time& t2, Date& d1);
 public:
     Time(unsigned hours,unsigned minutes,unsigned seconds);
     Time();
