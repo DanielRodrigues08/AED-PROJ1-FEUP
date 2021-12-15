@@ -11,6 +11,8 @@ Plane::Plane(unsigned int numSeatsFirst, unsigned int numSeatsExecutive, unsigne
     this->numSeatsEconomic = numSeatsEconomic;
     this->plate = plate;
     this->model = model;
+    this->broken = false;
+    this->dirty=false;
 }
 
 Plane::Plane() {
@@ -19,6 +21,8 @@ Plane::Plane() {
     this->numSeatsEconomic = 0;
     this->plate = "";
     this->model = "";
+    this->broken = false;
+    this->dirty=false;
 }
 
 unsigned Plane::getNumSeats() const {
@@ -79,4 +83,27 @@ list<CheckedSuitcase> Plane::unloadSuitcases(){
     list<CheckedSuitcase> temp = cargoHold;
     cargoHold.clear();
     return temp;
+}
+
+void Plane::addPassenger(Passenger p1) {
+    passengers.push_back(p1);
+}
+
+void Plane::addPassenger(list<Passenger> p1) {
+    passengers.merge(p1);
+}
+
+list<Passenger> Plane::unloadPassenger() {
+    list<Passenger> temp = passengers;
+    passengers.clear();
+    return temp;
+}
+
+bool Plane::removePassenger(Passenger p1) {
+    auto it = passengers.find(p1);
+    if(it != passengers.end()){
+        passengers.erase(it);
+        return true;
+    }
+    return false;
 }
