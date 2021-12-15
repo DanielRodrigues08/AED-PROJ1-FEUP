@@ -1,14 +1,13 @@
 //
 // Created by pedro on 01/12/2021.
 //
-
 #ifndef AED_PROJ1_MENU_H
 #define AED_PROJ1_MENU_H
 
 #include <iostream>
 #include <map>
 #include <functional>
-#include "passenger.h"
+#include "Passenger.h"
 #include "Airplane.h"
 #include <Windows.h>
 
@@ -17,6 +16,7 @@ using namespace std;
 
 class Menu{
 protected:
+
     static vector<Passenger*> passengers;
     Menu * invalidOption();
 public:
@@ -65,21 +65,55 @@ public:
     Menu * getNextMenu() override;
 };
 
-class FlightMenu : public Menu{
-
-    vector < vector<Flight>* > flights;
+class CancelMenu : public Menu{
     Passenger * passenger;
 public:
-    FlightMenu(Passenger* passenger);
+    explicit CancelMenu(Passenger * passenger);
     void show() override;
     Menu * getNextMenu() override;
 };
 
-class TransportsMenu : public Menu{
-
-
+class FlightMenu : public Menu{
+    vector < vector<Flight>* > flights;
+    Passenger * passenger ;
+    bool loggedIn;
 public:
     FlightMenu(Passenger* passenger);
+    FlightMenu(bool loggedIn);
+    void show() override;
+    Menu * getNextMenu() override;
+};
+
+class BuyMenu : public Menu{
+    Passenger* passenger;
+public:
+    BuyMenu(Passenger* passenger);
+    void show() override;
+    Menu * getNextMenu() override;
+};
+
+
+class TransportsMenu : public Menu{
+
+public:
+    TransportsMenu();
+    void show() override;
+    Menu * getNextMenu() override;
+};
+
+class TicketsMenu : public Menu{
+
+    Passenger* passenger;
+public:
+    TicketsMenu(Passenger* passenger);
+    void show() override;
+    Menu * getNextMenu() override;
+};
+
+class CheckInMenu : public Menu{
+
+public:
+    CheckInMenu();
     void show() override;
     Menu * getNextMenu() override;
 };

@@ -10,24 +10,15 @@ Airplane::Airplane(const string licensePlate, const string type, int capacity) :
 void Airplane::assignFlight(Flight &flight) {
     flights.push_back(flight);
     flights.sort();
-
 }
 
-void Airplane::delayFlight(Flight &flight) {
-    list<Flight>::iterator it;
-    it = std::find(flights.begin(),flights.end(),flight);
-    it->setDepartureDate(flight.getDepartureDate());
-    flights.sort();
-}
-
-void Airplane::cancelFlight(Flight &flight) {
+void Airplane::removeFlight(Flight &flight) {
     flights.remove(flight);
 }
 
 void Airplane::scheduleService(Service &service){
     shceduledServices.push(service);
 }
-
 
 int Airplane::availableSeats() {
     return capacity - seatsReserved;

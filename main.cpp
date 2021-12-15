@@ -6,7 +6,6 @@
 #include <iomanip>
 
 int main() {
-    std::cout << std::left;
 
     std::stack<Menu *> menus;
     menus.push(new MainMenu());

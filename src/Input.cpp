@@ -48,8 +48,8 @@ namespace input {
             std::cout << "ID number can't be empty" << std::endl;
             return false;
         }
-        if (id.length() > MAX_NICKNAME_LENGHT) {
-            std::cout << "ID number can't exceed " << MAX_NICKNAME_LENGHT << " characters " << std::endl;
+        if (id.length() > MAX_NAME_LENGHT) {
+            std::cout << "ID number can't exceed " << MAX_NAME_LENGHT << " characters " << std::endl;
             return false;
         }
 
@@ -106,4 +106,34 @@ namespace input {
         return true;
     }
 
+    bool validateFlight(const std::string &destination) {
+        if (destination.empty()) {
+            std::cout << "Airport name can't be empty" << std::endl;
+            return false;
+        }
+        if (destination.length() > MAX_NAME_LENGHT) {
+            std::cout << "Airport name can't exceed " << MAX_NAME_LENGHT << " characters " << std::endl;
+            return false;
+        }
+        for (auto c: destination) {
+            if (!isalpha(c) && c != ' ') {
+                std::cout << "Airport name can only contain alphabetic characters and spaces" << std::endl;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool validateClass(const std::string &classe) {
+        if (classe.empty()) {
+            std::cout << "Class can't be empty" << std::endl;
+            return false;
+        }
+
+        if(classe != "economic" || classe != "business" || classe != "first"){
+            std::cout << "Class must be one of three options \n [economic] \n [business] \n [first]" << std::endl;
+            return false;
+        }
+        return true;
+    }
 }

@@ -11,8 +11,6 @@
 #include <sstream>
 
 #define MAX_NAME_LENGHT 20
-#define MAX_NICKNAME_LENGHT 10
-#define MAX_TITLE_LENGHT 20
 
 namespace input {
     /**
@@ -21,13 +19,6 @@ namespace input {
      */
     std::string getRaw();
 
-    /**
-     * Remove leading/trailing whitespace from string,
-     * and reduces multiple consecutive whitespaces into a single one
-     * e.g "example      string" => "example string"
-     * @param str - String to be changed
-     */
-    void trimString(std::string &str);
 
     /**
      * Convert a string to a var of type T
@@ -66,12 +57,13 @@ namespace input {
      */
     void waitEnter();
 
+    void trimString(std::string &str);
     /**
-     * Check if nickname is valid
-     * @param nickname
+     * Check if name is valid
+     * @param name
      * @return true if valid
      */
-    bool validateNickname(const std::string &nickname);
+    bool validateID(const std::string &userid);
 
     /**
      * Check if name is valid
@@ -88,10 +80,20 @@ namespace input {
     bool validateBirthDate(const std::string &date);
 
     /**
-     * Check if title is valid
+     * Check if flight is valid
      * @param title
      * @return true if valid
      */
+
+    bool validateFlight(const std::string &flight);
+
+    /**
+     * Check if class is valid
+     * @param title
+     * @return true if valid
+     */
+
+    bool validateClass(const std::string &classe);
 }
 
 #endif //AED_PROJ1_INPUT_H

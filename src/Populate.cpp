@@ -5,15 +5,15 @@
 #include <fstream>
 #include <vector>
 #include "Populate.h"
+#include "Flight.cpp"
 
 namespace populate {
-
+/*
     void populateFlights(vector<vector<Flight> *> flights) {
         ifstream file("flights.txt");
         int number;
         string from, to, departureDate, duration;
         while (file >> number >> from >> to >> departureDate >> duration) {
-            bool destPresent = true;
             for (vector<Flight> *v: flights) {
                 bool destNotPresent = true;
                 if (v->at(0).getOrigin() == from && v->at(0).getDepartureDate() == to) {
@@ -28,4 +28,4 @@ namespace populate {
             }
         }
     };
-}
+}*/

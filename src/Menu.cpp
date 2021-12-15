@@ -1,16 +1,12 @@
 //
 // Created by pedro on 01/12/2021.
 //
-#pragma once
-#include "Menu.h"
+
+
 #include "Input.h"
 #include "Input.cpp"
-#include "passenger.h"
-#include "passenger.cpp"
-#include "Populate.h"
-#include "Populate.cpp"
-#include <Windows.h>
-
+#include "Passenger.cpp"
+#include "Flight.cpp"
 
 using namespace std;
 
@@ -49,6 +45,7 @@ Menu * MainMenu::getNextMenu() {
         case 0: return nullptr;
         case 1: return new LoginPassengerMenu();
         case 2: return new RegisterPassengerMenu();
+        case 3: return new FlightMenu(false);
     }
     return invalidOption();
 }
@@ -76,8 +73,8 @@ Menu * RegisterPassengerMenu::getNextMenu() {
         return invalidOption();
     }
 
-    Passenger p1(userid,birth_date,name);
-    passengers.push_back(&p1);
+
+    passengers.push_back(new Passenger(userid,birth_date,name));
     cout << " \n You've registered with success" << endl;
     input::waitEnter();
     return nullptr;
@@ -129,8 +126,10 @@ void BookingMenu::show() {
     unsigned int option = 1;
 
     std::cout << "[" << option++ << "] Book Flight" << std::endl;
-    //std::cout << "[" << option++ << "] Book a Plane" << std::endl;
     std::cout << "[" << option++ << "] Cancel Flight" << std::endl;
+    std::cout << "[" << option++ << "] Tickets" << std::endl;
+    std::cout << "[" << option++ << "] Check-In" << std::endl;
+
 
     std::cout << "[0] Exit" << std::endl;
 }
@@ -146,19 +145,61 @@ Menu * BookingMenu::getNextMenu() {
         unsigned int id, pos;
         switch(option){
             case 1: return new FlightMenu(passenger);
-            //case 2 in STAN-BY still thinking what is the best option 1-Create a menu 2-Create a method in plane
-            //case 2: passenger.; return this;
-            //should i create ANOTHER menu??
-            case 3: passenger->cancelFlight(); return this;
+            case 2: return new CancelMenu(passenger);
+            case 3: return new TicketsMenu(passenger);
+            case 4: return new CheckInMenu();
         }
     }
     return invalidOption();
 }
 
-// --------------- Show Flight Menu ---------------
-FlightMenu::FlightMenu(Passenger* passenger)  : passenger(passenger)  {
-    populate::populateFlights(flights);
+
+// --------------- Cancel Menu ---------------
+CancelMenu::CancelMenu(Passenger * passenger) : Menu(),passenger(passenger) {}
+void CancelMenu::show() {
+    system("cls");
+
+    cout << "Which ticket do you desire to cancel? [TICKET ID]" << endl;
 }
+
+Menu * CancelMenu::getNextMenu() {
+    int ticketID;
+    if(!input::get(ticketID)){
+        return invalidOption();
+    }
+
+    if(passenger->getTicket(ticketID)== nullptr){
+        return invalidOption();
+    }
+
+    passenger->getTicket(ticketID)->show();
+
+
+    cout << "\n PRESS [1] If you wish to cancel your ticket " << endl;
+    cout << "PRESS [0] TO GO TO PREVIOUS MENU" << endl;
+
+    int option;
+    if(!input::get(option))
+        return invalidOption();
+    if(option == 0){
+        return nullptr;
+    }
+    else if(option == 1){
+        passenger->cancelTicket(ticketID);
+        input::waitEnter();
+        return nullptr;
+    }
+
+
+    return invalidOption();
+}
+
+
+// ---------------  Flight Menu ---------------
+FlightMenu::FlightMenu(Passenger* passenger)  : Menu(),passenger(passenger){}
+
+FlightMenu::FlightMenu(bool loggedIn) : Menu(),loggedIn(loggedIn){}
+
 
 void FlightMenu::show() {
     system("cls");
@@ -170,16 +211,18 @@ void FlightMenu::show() {
 }
 Menu * FlightMenu::getNextMenu() {
     //ask your passenger where he wants to go
-    int option;
     string origin, destination;
     cout << "From: "; origin = input::getRaw();
-    if(!input::validateName(origin)){
+
+    if(!input::validateFlight(origin)){
         return invalidOption();
     }
+
     cout << "To: "; destination = input::getRaw();
-    if(!input::validateName(destination)){
+    if(!input::validateFlight(destination)){
         return invalidOption();
     }
+
     input::waitEnter();
     for(auto q : flights) {
         if(q->at(0).getOrigin() ==  origin && q->at(0).getDestination()==destination){
@@ -191,9 +234,21 @@ Menu * FlightMenu::getNextMenu() {
         }
         else{
             cout << "Sorry, at the moment we don't have flights for your desired location" << endl;
+            input::waitEnter();
             return this;
         }
     }
+    if(loggedIn){
+        return new BuyMenu(passenger);
+    }
+    return nullptr;
+}
+
+// --------------- Buy Menu ---------------
+BuyMenu::BuyMenu(Passenger* passenger): Menu(),passenger(passenger){}
+void BuyMenu::show() {}
+
+Menu * BuyMenu::getNextMenu() {
 
     int desiredFlightNumber,numOfTickets;
     cout << "Flight Number: ";
@@ -208,7 +263,8 @@ Menu * FlightMenu::getNextMenu() {
 
     for(int i=1;i <= numOfTickets; i++){
         system("cls");
-        string userid,birth_date, name;
+        string userid,birth_date, name,classe;
+
         cout << "(" << i << "/" << numOfTickets << ")" << endl;
         cout << " ===========================================" << endl;
 
@@ -216,7 +272,7 @@ Menu * FlightMenu::getNextMenu() {
         if(!input::get(userid) || !input::validateID(userid)){
             return invalidOption();
         }
-        cout << "name\n "; name = input::getRaw();
+        cout << "Name\n "; name = input::getRaw();
         if(!input::validateName(name)){
             return invalidOption();
         }
@@ -225,12 +281,58 @@ Menu * FlightMenu::getNextMenu() {
             return invalidOption();
         }
 
-        passenger->buyTicket();
-    }
+        cout << "Class\n ";  classe = input::getRaw();
+        if(!input::validateClass(classe)){
+            return invalidOption();
+        }
 
+        if(passenger->canBuyTicket()){
+            passengers.push_back(new Passenger(userid,birth_date,name));
+            passenger->buyTicket();
+        }
+        else{
+            cout << "Unfortunately is was not possible to buy your ticket" << endl;
+            return this;
+        }
+    }
+    cout << "THE PROCESS IS COMPLETE" << endl;
+    input::waitEnter();
+    return new TicketsMenu(passenger);
+}
+
+// --------------- Transports Menu ---------------
+TransportsMenu::TransportsMenu(): Menu() {}
+void TransportsMenu::show() {
+    system("cls");
+
+}
+
+Menu * TransportsMenu::getNextMenu() {
+
+    input::waitEnter();
+    return nullptr;
+}
+
+// ---------------  Ticket Menu ---------------
+TicketsMenu ::TicketsMenu (Passenger* passenger):Menu(), passenger(passenger) {}
+void TicketsMenu ::show() {
+    system("cls");
+
+}
+
+Menu * TicketsMenu ::getNextMenu() {
 
     return nullptr;
 }
 
-// --------------- Show Transports Menu ---------------
+// --------------- Check-in Menu ---------------
 
+CheckInMenu ::CheckInMenu():Menu() {}
+void CheckInMenu ::show() {
+    system("cls");
+
+}
+Menu * CheckInMenu::getNextMenu() {
+
+    return nullptr;
+}

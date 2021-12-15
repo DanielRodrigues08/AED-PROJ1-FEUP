@@ -5,7 +5,7 @@
 #include "Flight.h"
 
 Flight::Flight(int number,string origin,string destination,string departureDate,string duration){
-    this.number = number;
+    this->number = number;
     this->origin = origin;
     this->destination = destination;
     this->departureDate= departureDate;
@@ -14,9 +14,15 @@ Flight::Flight(int number,string origin,string destination,string departureDate,
 
 
 int Flight::getNumber(){
-    return this.number;
+    return this->number;
 }
-bool Flight::operator<(Flight &flight) {return this->departureDate < flight.departureDate;}
+
+bool Flight::operator<(Flight &flight) {
+    if(origin < flight.getOrigin()){
+        return destination < flight.getDestination();
+    }
+    return origin < flight.getOrigin();
+}
 
 bool Flight::operator==(Flight &flight) {return this->number < flight.number;}
 
@@ -36,6 +42,10 @@ string Flight::getDestination() {
     return destination;
 }
 
-void Flight::setDepartureDate() {
+void Flight::setDepartureDate(string newDepartureDate) {
+    departureDate = newDepartureDate;
+}
 
+void Flight::incrementBookedSeats() {
+   bookedSeats++;
 }

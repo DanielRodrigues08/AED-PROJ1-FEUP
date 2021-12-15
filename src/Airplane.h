@@ -14,7 +14,6 @@ using namespace std;
 class Airplane {
     const string licensePlate, type;
     int capacity;
-    int seatsReserved;
     list<Flight> flights;
     queue<Service> scheduledServices;
 
@@ -22,9 +21,8 @@ public:
 
     Airplane(string licensePlate,string type,int capacity);
     //flight related methods
-    int availableSeats();
     void assignFlight(Flight &flight);
-    void delayFlight(Flight &flight);
+    void removeFlight(Flight &flight);
     //service related methods
     void scheduleService(Service &service);
 };

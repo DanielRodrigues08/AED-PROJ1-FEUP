@@ -7,7 +7,7 @@
 using namespace std;
 
 class Flight {
-    int number;
+    int number,bookedSeats=0;
     string departureDate, duration, origin, destination;
 
 public:
@@ -18,7 +18,8 @@ public:
     string getOrigin();
     string getDestination();
     //setters, mainly used by the Airplane class to delay and alter flight characteristics
-    void setDepartureDate();
+    void setDepartureDate(string newDepartureDate);
+    void incrementBookedSeats();
 
     bool operator<(Flight &flight);
     bool operator==(Flight &flight);
