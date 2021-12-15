@@ -4,9 +4,10 @@
 
 
 #include "Input.h"
-#include "Input.cpp"
-#include "Passenger.cpp"
+#include "Menu.h"
+#include "Person.h"
 #include "Flight.cpp"
+#include <vector>
 
 using namespace std;
 

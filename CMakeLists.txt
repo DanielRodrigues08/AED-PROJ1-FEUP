@@ -7,8 +7,25 @@ add_subdirectory(lib/googletest-master)
 include_directories(lib/googletest-master/googletest/include)
 include_directories(lib/googletest-master/googlemock/include)
 
-add_executable(AED_PROJ1 main.cpp tests/tests.cpp )
-
+add_executable(AED_PROJ1 main.cpp tests/tests.cpp
+        src/Carriage.cpp
+        src/CheckIn.cpp
+        src/Date.cpp
+        src/Flight.cpp
+        src/Input.cpp
+        src/Menu.cpp
+        src/Person.cpp
+        src/Plane.cpp
+        src/Populate.cpp
+        src/Services.cpp
+        src/Station.cpp
+        src/Suitcase.cpp
+        src/Ticket.cpp
+        src/Time.cpp
+        src/TransportCart.cpp
+        src/Transport.cpp
+        src/Treadmill.cpp
+        )
 target_link_libraries(AED_PROJ1 gtest gtest_main)
 
 find_package(Doxygen)
