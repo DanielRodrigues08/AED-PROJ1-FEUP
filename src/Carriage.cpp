@@ -2,9 +2,10 @@
 
 #include <stack>
 #include <list>
-#include <queue>
 #include "Carriage.h"
 #include "Suitcase.h"
+
+Carriage::Carriage() = default;
 
 Carriage::Carriage(unsigned maxNumSuitcases, unsigned maxNumStacks):maxNumSuitcases(maxNumSuitcases), maxNumStacks(maxNumStacks) {}
 
@@ -23,14 +24,14 @@ bool Carriage::addSuitcase(const CheckedSuitcase &l1) {
 
 unsigned Carriage::getCapacity() {
     unsigned counter = 0;
-    for(auto idx: suitcases)
+    for(const auto& idx: suitcases)
         counter += idx.size();
     return maxNumStacks*maxNumSuitcases - counter;
 }
 
 bool Carriage::isEmpty() {
-    for(auto idx: suitcases)
-        if(idx.size() != 0)
+    for(const auto& idx: suitcases)
+        if(!idx.empty())
             return false;
     return true;
 }

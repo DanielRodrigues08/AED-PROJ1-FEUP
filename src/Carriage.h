@@ -12,6 +12,7 @@ class Carriage {
     unsigned maxNumSuitcases;
     unsigned maxNumStacks;
 public:
+    Carriage();
     Carriage(unsigned maxNumSuitcases, unsigned maxNumStacks);
     bool addSuitcase(const CheckedSuitcase& l1);
     CheckedSuitcase removeSuitcase();
