@@ -1,20 +1,17 @@
 #include "Suitcase.h"
-#include "Passenger.h"
+#include "Person.h"
 #include "Flight.h"
 
+unsigned Suitcase::idAux =1;
+
 Suitcase::Suitcase() {
-    weight = 0;
-    width = 0;
-    height = 0;
-    length = 0;
 }
 
 Suitcase::Suitcase( float weight, float width, float height, float length): weight(weight), width(width), height(height), length(length){
+    id = idAux;
+    idAux++;
 }
 
-void Suitcase::setWeight(float weight) {
-    this->weight=weight;
-}
 
 float Suitcase::getWeight() const{
     return weight;
@@ -42,11 +39,12 @@ void Suitcase::removeOverweight(){
 
 Handbag::Handbag(): Suitcase(){}
 
-Handbag::Handbag(float weight, float width, float height, float length): Suitcase(weight,width,height,length){}
+Handbag::Handbag(float weight, float width, float height, float length): Suitcase(weight,width,height,length){
+}
 
 
 bool Handbag::isAllowedDimensions() const{
-    if(getHeight() > 55 || getWidth() > 20 || getHeight() > 40)
+    if(getHeight() > 55 || getWidth() > 20 || getHeight() > 40 || getWeight() < 0)
         return false;
     return true;
 }
@@ -75,16 +73,41 @@ float HoldSuitcase::overweight() const{
         return 0;
 }
 
-CheckedSuitcase::CheckedSuitcase(Passenger passenger, Flight flight, HoldSuitcase suitcase): suitcase(suitcase), passenger(passenger), flight(flight) {}
-
-Flight CheckedSuitcase::getFlight() const {
-    return flight;
+unsigned Suitcase::getID() const {
+    return id;
 }
 
-Passenger CheckedSuitcase::getPassenger() const {
-    return passenger;
+bool Suitcase::operator==(const Suitcase &c1) const{
+    return c1.id == id;
 }
 
-HoldSuitcase CheckedSuitcase::getSuitcase() {
-    return suitcase;
+bool Suitcase::operator==(const Suitcase *c1) const{
+    return c1->id == id;
 }
+
+void Suitcase::setWeight(float w1) {
+    weight = w1;
+}
+
+bool HoldSuitcase::updateWeight(float w1)  {
+    if(w1<0)
+        return false;
+    setWeight(w1);
+    return true;
+}
+
+bool Handbag::updateWeight(float w1)  {
+    if(w1<0)
+        return false;
+    setWeight(w1);
+    return true;
+}
+
+string Handbag::getType() const {
+    return "Handbag";
+}
+
+string HoldSuitcase::getType() const {
+    return "HoldSuitcase";
+}
+

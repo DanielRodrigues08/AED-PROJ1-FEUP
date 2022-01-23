@@ -2,30 +2,38 @@
 #define AED_PROJ1_SERVICES_H
 #include "Date.h"
 #include "Time.h"
-#include "Plane.h"
 #include "Person.h"
 
 enum TypeService{maintenance, cleaning};
-
+/**
+ * holds data for the services to be performed on the plane
+ */
 class Service {
-private:
     static unsigned idAux;
     unsigned id;
-    Staff staff;
+    Person staff;
     Date date;
     Time time;
-    Plane plane;
     TypeService type;
 public:
-    Service(Staff staff, Date date, Time time, Plane plane, TypeService type);
+    /**
+     * main constructor - populates all the attributes
+     * @param staff  the staff member that will be performing the service
+     * @param date the date in which the service will be performed
+     * @param time the time at  which the service will be performed
+     * @param type the type may vary from cleaning to maintenance
+     */
+    Service(Person staff, Date date, Time time, TypeService type);
+    Service(){};
     void changeDate(Date d1);
     void changeTime(Time t1);
-    void changeStaff(Staff s1);
+    void changeStaff(Person s1);
+    unsigned getAssignStaffNIF() const;
     unsigned getId() const;
     Date getDate() const;
     Time getTime() const;
-    Plane getPlane() const;
     TypeService getType() const;
+    void show() const;
 };
 
 

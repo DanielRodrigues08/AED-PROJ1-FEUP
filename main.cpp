@@ -1,7 +1,4 @@
-#include "gtest/gtest.h"
-#include "gmock/gmock.h"
 #include "src/Menu.h"
-#include "src/Menu.cpp"
 #include <stack>
 #include <iomanip>
 

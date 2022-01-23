@@ -14,8 +14,8 @@ inline unsigned Date::GetMonthDay(int year, int month) const  //Get specific day
 Date::Date(unsigned year,unsigned month,unsigned day)
 {
     if (year > 1800
-        && month > 0 && month<13
-        && day>0 && day <= GetMonthDay(year, month)){
+        && month >= 0 && month<13
+        && day>=0 && day <= GetMonthDay(year, month)){
         this->year = year;
         this->month = month;
         this->day = day;
@@ -42,11 +42,11 @@ unsigned Date::getYear() const {
     return year;
 }
 
-bool Date::operator==(const Date &d1) {
+bool Date::operator==(const Date &d1) const{
     return d1.getYear() == year && d1.getMonth() == month && d1.getDay() == day;
 }
 
-bool Date::operator<(const Date &d1) {
+bool Date::operator<(const Date &d1) const{
     if(d1.getYear() == year && d1.getMonth() == month)
         return day < d1.getDay();
     if(d1.getYear() == year)
@@ -55,6 +55,25 @@ bool Date::operator<(const Date &d1) {
 }
 
 ostream& operator<<(ostream& out, const Date& d1){
-    out << d1.getYear() << "-" << setw(2) << setfill('0') << d1.getMonth() << ":" << setw(2) << setfill('0') << d1.getDay();
+    out << d1.year << "-" << setw(2) << setfill('0') << d1.month << "-" << setw(2) << setfill('0') << d1.day;
     return out;
+}
+
+
+istream& operator>>(istream& is,  Date& d){
+    int day, month, year;
+    char ch1, ch2;
+    if (is >> day >> ch1 >> month >> ch2 >> year)
+    {
+        if ((ch1 == '/' && ch2 == '/') || (ch1 == '-' && ch2 == '-')){
+            try {
+                d = Date(day, month, year);
+            }catch (ErrorInvalidDate){
+                is.setstate(ios::failbit);
+            }
+        }
+        else
+            is.setstate(ios::failbit);
+    }
+    return is;
 }

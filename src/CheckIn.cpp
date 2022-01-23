@@ -12,19 +12,16 @@ CheckIn::CheckIn(Treadmill treadmill):treadmill(treadmill) {
     idAux++;
 }
 
-float CheckIn::checkInPassenger(Passenger passenger, Ticket ticket) {
+float CheckIn::checkInPassenger(Passenger* passenger, Ticket ticket) {
     int counter = 0;
-    for(auto it = passenger.getLuggage().begin(); it != passenger.getLuggage().end(); it++){
-        if(!(*it)->isAllowedDimensions()){
-            it = passenger.getLuggage().erase(it);
-            it--;
+    for(auto it = passenger->getLuggage().begin(); it != passenger->getLuggage().end(); it++){
+        if((*it)->overweight() != 0){
+            counter+=(*it)->overweight();
         }
-        else if((*it)->overwight != 0){
-            counter+=(*it)->overwight;
-        }
-        if(dynamic_cast<HoldSuitcase*>(*it)){
-            treadmill.addSuitcase(CheckedSuitcase(*(*it),passenger,ticket.getFlight()));
-            it = passenger.getLuggage().erase(it);
+        if((*it)->getType()=="HoldSuitcase"){
+            cout << "CHECK IN HOLD SUIT CASE" << endl;
+            treadmill.addSuitcase(CheckedSuitcase(*passenger,ticket.getFlight(),*(dynamic_cast<HoldSuitcase*>(*it))));
+            it = passenger->getLuggage().erase(it);
             it--;
         }
     }

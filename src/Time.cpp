@@ -6,7 +6,7 @@
 using namespace std;
 
 Time::Time(unsigned int hours, unsigned int minutes, unsigned int seconds) {
-    if(hours < 24 || minutes < 60 || seconds < 60)
+    if(hours>24 || minutes >59 || seconds >59)
         throw ErrorInvalidTime();
     else{
         this->hours = hours;
@@ -22,7 +22,7 @@ Time::Time() {
 }
 
 ostream& operator<<(ostream& out, const Time& t){
-    out << setw(2) << setfill('0') << t.getHours() << ":" << setw(2) << setfill('0') << t.getMinutes() << ":" << setw(2) << setfill('0') << t.getSeconds();
+    out << setw(2) << setfill('0') << t.hours << ":" << setw(2) << setfill('0') << t.minutes << ":" << setw(2) << setfill('0') << t.seconds;
     return out;
 }
 
@@ -38,16 +38,44 @@ unsigned Time::getSeconds() const {
     return seconds;
 }
 
-bool Time::operator<(const Time &t1) {
-    if(hours == t1.getHours() && minutes == t1.getMinutes())
-        return seconds < t1.getSeconds();
-    if(hours == t1.getHours())
-        return minutes < t1.getMinutes();
-    return hours < t1.getHours();
+bool Time::operator<(const Time &t1) const{
+    if(hours == t1.hours && minutes == t1.minutes)
+        return seconds < t1.seconds;
+    if(hours == t1.hours)
+        return minutes < t1.minutes;
+    return hours < t1.hours;
 }
 
-bool Time::operator==(const Time &t1) {
-    if(t1.getHours() == hours && t1.getMinutes() == minutes && t1.getSeconds() == seconds)
+bool Time::operator<=(const Time &t1) const{
+    if(hours == t1.hours && minutes == t1.minutes && seconds == t1.seconds)
+        return true;
+    if(hours == t1.hours && minutes == t1.minutes)
+        return seconds < t1.seconds;
+    if(hours == t1.hours)
+        return minutes < t1.minutes;
+    return hours < t1.hours;
+}
+
+bool Time::operator==(const Time &t1) const{
+    if(t1.hours == hours && t1.minutes == minutes && t1.seconds == seconds)
         return true;
     return false;
+}
+
+istream& operator>>(istream& is, Time& t){
+    unsigned hour, minute, second;
+    char ch1, ch2;
+    if (is >> hour >> ch1 >> minute >> ch2 >> second)
+    {
+        if (ch1 == ':' && ch2 == ':') {
+            try{
+            t = Time(hour, minute, second);
+            }catch (ErrorInvalidTime){
+                is.setstate(ios::failbit);
+            }
+        }
+        else
+            is.setstate(ios::failbit);
+    }
+    return is;
 }

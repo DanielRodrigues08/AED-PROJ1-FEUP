@@ -2,42 +2,64 @@
 #define AED_PROJ1_PLANE_H
 #include <string>
 #include <list>
+#include <vector>
 #include "Flight.h"
-#include "Suitcase.h"
+#include "CheckedSuitcase.h"
+#include "Services.h"
 using namespace std;
 
 
 class Plane{
-    unsigned numSeatsFirst;
-    unsigned numSeatsExecutive;
-    unsigned numSeatsEconomic;
-    string plate;
+    unsigned numSeatsFirst=20;
+    unsigned numSeatsExecutive=30;
+    unsigned numSeatsEconomic=100;
+    int licensePlate;
     string model;
     list<CheckedSuitcase> cargoHold;
-    list<Passenger> passengers;
-    list<Flight*> flightPlan;
-    bool broken;
-    bool dirty;
+    list<Passenger*> passengers;
+    vector<Flight*> flightPlan;
+    queue<Service> servicesToDo;
+    list<Service> servicesDone;
+    stack<Flight*> pastFlights;
 public:
-    Plane(unsigned numSeatsFirst, unsigned numSeatsExecutive, unsigned numSeatsEconomic, string plate, string model);
+    Plane(unsigned int numSeatsFirst, unsigned int numSeatsExecutive, unsigned int numSeatsEconomic, int licensePlate,string model);
     Plane();
-    unsigned getNumSeats() const;
+    int getLicensePlate() const;
     unsigned getNumSeatsFirst() const;
     unsigned getNumSeatsExecutive() const;
     unsigned getNumSeatsEconomic() const;
-    void changeNumSeatsFirst(unsigned num);
-    void changeNumSeatsExecutive(unsigned num);
-    void changeNumSeatsEconomic(unsigned num);
-    void changePlate(string plate);
+    string getModel() const;
+    vector<Flight*> getFlightPlan();
     void addGroupSuitcaseCargo(list<CheckedSuitcase> c1);
-    void addSuitcaseCargo(CheckedSuitcase c1);
     void addFlight(Flight* f1);
     bool removeFlight(unsigned id);
-    list<CheckedSuitcase> unloadSuitcases();
-    void addPassenger(Passenger p1);
-    void addPassenger(list<Passenger> p1);
-    void removePassenger(Passenger p1);
-    list<Passenger> unloadPassenger();
+    void addPassenger(Passenger* p1);
+    void unloadSuitcases();
+    void unloadPassenger();
+    void addService(Service s1);
+    void addServiceDone(Service s1); //for purposes of populating
+    list<Service>getServicesDone();
+    void doService();
+    list<Service> getNEliminateServicesToDo();
+    vector<Flight> getFlight(const string& origin, const string& destination ) const;
+    Flight* getFirstFlight();
+    unsigned getIDFirstFlight();
+    void setNextFlight();
+    void showAllPassengers() const;
+    void showCargoHold() const;
+    void show() const;
+    void showService() const;
+    unsigned getNumFlights() const;
+    void updateFlight(unsigned id, Date departureDate, Time departureTime, Time duration, Location destination, Location Origin);
 };
+
+
+class ErrorNoFlight{
+public:
+    ErrorNoFlight(){};
+};
+
+
+
 
 #endif //AED_PROJ1_PLANE_H

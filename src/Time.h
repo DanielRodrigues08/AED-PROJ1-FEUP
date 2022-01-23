@@ -7,16 +7,27 @@
 #include "Date.h"
 
 using namespace std;
-
+/**
+ * simple class used to cover cases where a time type class is needed
+ */
 class Time{
+    friend ostream& operator<<(ostream& out, const Time& t);
+    friend istream& operator>>(istream& is,Time& t);
 private:
     unsigned hours, minutes, seconds;
-    friend void sum( Time& t1, const Time& t2, Date& d1);
 public:
+    /**
+     * main constructor - populates all the attributes
+     * @param hours
+     * @param minutes
+     * @param seconds
+     */
     Time(unsigned hours,unsigned minutes,unsigned seconds);
     Time();
-    bool operator<(const Time& t1);
-    bool operator==(const Time& t1);
+    bool operator<(const Time& t1) const;
+    bool operator<=(const Time& t1) const;
+    bool operator==(const Time& t1) const;
+
     unsigned getHours() const;
     unsigned getMinutes() const;
     unsigned getSeconds() const;
