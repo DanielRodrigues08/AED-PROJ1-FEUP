@@ -1,2 +1,2 @@
-AED_PROJ1
-Nota: 19.65
+# Algorithms and Data Structures
+FEUP L.EIC Y2S1
